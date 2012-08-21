@@ -1,0 +1,25 @@
+#slideshow{
+	padding-bottom: 30px;
+}
+#slideshow img {
+	display: none;
+	position: absolute;
+}
+#pagination{
+	display: inline-block;
+	float: right;
+	position: relative;
+}
+#pagination li{
+	float: left;
+	margin-left: 3px;
+}
+#pagination a{
+	display: inline-block;
+	width: 15px;
+	height: 16px;
+	background: url(../images/pagination.png) no-repeat -37px -7px;
+}
+#pagination a.current{
+	background-position: -17px -7px;
+}
