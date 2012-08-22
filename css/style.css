@@ -1,13 +1,20 @@
 #slideshow{
 	padding-bottom: 30px;
 }
-#slideshow img {
+#slideshow .container{
+	background-color: #fff;
+	overflow: hidden;
+	padding: 10px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+#slideshow .container img {
 	display: none;
 	position: absolute;
 }
 #pagination{
 	display: inline-block;
-	float: right;
+	margin: 0 auto;
+	padding: 0;
 	position: relative;
 }
 #pagination li{
@@ -16,10 +23,10 @@
 }
 #pagination a{
 	display: inline-block;
-	width: 15px;
-	height: 16px;
-	background: url(../images/pagination.png) no-repeat -37px -7px;
+	width: 12px;
+	height: 12px;
+	background: url(../images/pagination.png) no-repeat -15px 0;
 }
 #pagination a.current{
-	background-position: -17px -7px;
+	background-position: 0 0;
 }

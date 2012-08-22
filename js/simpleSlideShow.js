@@ -9,18 +9,19 @@
 			$.extend(config, settings);
 		}
 
-		var slideshow = $(selector),
-			img = slideshow.children('img'),
-			count = img.length,
+		var $slideshow = $(selector),
+			$container = $slideshow.find('.container'),
+			$img = $container.find('img'),
+			count = $img.length,
 			i = 0,
 			timer = null;
 		
 		appendPagination();
 
-		var pagination = $('#pagination');
-		var paginationLink = pagination.find('a');
+		var $pagination = $('#pagination');
+		var $paginationLink = $pagination.find('a');
 
-		getSlideshowDimension();
+		getImageDimension();
 		
 		initSlideshow();
 		startSlideshow();
@@ -35,46 +36,61 @@
 			}
 
 			paginationHtml += '</ul>';
-			slideshow.append(paginationHtml);
+			$slideshow.append(paginationHtml);
 		}
 
-		function getSlideshowDimension() {
+		function getImageDimension() {
 			var width, height;
-			img.eq(i).load(function() {
+			$img.eq(i).load(function() {
 				width = $(this).width();
 				height = $(this).height();
-				slideshow.width(width);
-				slideshow.height(height);
-				pagination.css('top', height);
+
+				setSlideshowDimension(width, height);
+				setPaginationPos(height);
 			});
 		}
 
 		function initSlideshow() {
-			img.eq(i).show();
-			paginationLink.eq(i).addClass('current');
+			$img.eq(i).show();
+			$paginationLink.eq(i).addClass('current');
 		}
 
 		function startSlideshow() {
 			timer = setInterval(function() {
-				img.eq(i).fadeOut(config.fadeSpeed);
-				paginationLink.eq(i).removeClass('current');
+				$img.eq(i).fadeOut(config.fadeSpeed);
+				$paginationLink.eq(i).removeClass('current');
 				i = (i+1 == count) ? 0 : i+1;
-				img.eq(i).fadeIn(config.fadeSpeed);
-				paginationLink.eq(i).addClass('current');
+				$img.eq(i).fadeIn(config.fadeSpeed);
+				$paginationLink.eq(i).addClass('current');
 			}, config.delay);
 		}
 
 		function bindClickOnPagination() {
-			paginationLink.click(function() {
+			$paginationLink.click(function() {
 				$(this).addClass('current');
 				$(this).parent('li').siblings().find('a').removeClass('current');
 				
-				img.eq(i).fadeOut(config.fadeSpeed);
-				i = paginationLink.index($(this));
-				img.eq(i).fadeIn(config.fadeSpeed);
+				$img.eq(i).fadeOut(config.fadeSpeed);
+				i = $paginationLink.index($(this));
+				$img.eq(i).fadeIn(config.fadeSpeed);
 				clearInterval(timer);
 				startSlideshow();
-				// console.log(i);
+			});
+		}
+
+		function setSlideshowDimension(width, height) {
+			$container.width(width).height(height);
+			$slideshow.width(width).height(height).css('margin', '0 auto');
+		}
+
+		function setPaginationPos(height) {
+			var slideshowWidth = $container.width();
+			var paginationWidth = $pagination.width();
+			var left = (slideshowWidth - paginationWidth) / 2;
+			console.log(slideshowWidth);
+			$pagination.css({
+				'left': left,
+				'top': 10
 			});
 		}
 	}
